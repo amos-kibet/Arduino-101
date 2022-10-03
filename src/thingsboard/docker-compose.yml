@@ -1,0 +1,34 @@
+version: "2.2"
+services:
+  mytb:
+    restart: always
+    image: "thingsboard/tb-postgres"
+    ports:
+      - "8080:9090"
+      - "1883:1883"
+      - "7070:7070"
+      - "5683-5688:5683-5688/udp"
+    environment:
+      TB_QUEUE_TYPE: rabbitmq
+      TB_QUEUE_RABBIT_MQ_USERNAME: YOUR_USERNAME
+      TB_QUEUE_RABBIT_MQ_PASSWORD: YOUR_PASSWORD
+      TB_QUEUE_RABBIT_MQ_HOST: localhost
+      TB_QUEUE_RABBIT_MQ_PORT: 5672
+    volumes:
+      - ~/.mytb-data:/data
+      - ~/.mytb-logs:/var/log/thingsboard
+# Before starting Docker container, create a directopry for data & logs storage
+# and change owner to docker container user
+# as below:
+# Uncomment command and run
+# mkdir -p ~/.mytb-data && sudo chown -R 799:799 ~/.mytb-data
+# mkdir -p ~/.mytb-logs && sudo chown -R 799:799 ~/.mytb-logs
+
+# Docker compose
+# docker-compose pull
+# docker-compose up
+
+# thingsboard login credentials
+# System admin: sysadmin@thingsboard.org / sysadmin (password)
+# Tenant admin: tenant@thingsboard.org /tenant
+# Customer User: customer@thingsboard.org / customer
